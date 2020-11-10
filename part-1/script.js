@@ -11,33 +11,42 @@ let btnAsync = document.querySelector('#btnAsync');
 btnAsync.onclick = runAsync;
 
 function runCallback() {
-  resetTitle();
-  playVideo();
+  resetTitle(); // 제목을 초기합니다. 1
+  playVideo(); // 영상을 재생합니다. 2
 
   delay(1000, () => {
-    pauseVideo();
-    displayTitle();
+    pauseVideo(); // 영상을 멈춥니다. 3
+    displayTitle(); //제목을 표시합니다 4 
 
     delay(500, () => {
-      highlightTitle();
-
-      delay(2000, resetTitle);
+      highlightTitle(); // 제목을 강조합니다 5
+      delay(2000, resetTitle); // 제목을 초기화합니다. 6
     });
   });
+
 }
+
 
 function runPromise() {
   resetTitle();
   playVideo();
 
-  sleep(1000).then(() => {
+  sleep(1000).then((param) => {
+    console.log(param);
     pauseVideo();
     displayTitle();
+    return 'world'
   })
-    .then(sleep.bind(null, 500))
-    .then(highlightTitle)
-    .then(sleep.bind(null, 2000))
-    .then(resetTitle)
+  .then((param) => { 
+    console.log(param);
+    sleep(500);
+  })
+  .then(highlightTitle)
+  .then(sleep.bind(null, 2000))
+  .then(resetTitle)
+  .catch(err => {
+    console.log(err);
+  })
 }
 
 async function runAsync() {
@@ -53,6 +62,7 @@ async function runAsync() {
 
   await sleep(2000);
   resetTitle();
+  
 }
 
 
